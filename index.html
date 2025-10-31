@@ -690,15 +690,15 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
     }
 
     // 2. validate that all 80 answers are filled
-    // const allSelects = document.querySelectorAll("#surveyForm select");
-    // for (const sel of allSelects) {
-    //     if (!sel.value) {
-    //         alert("Please answer all 80 questions (1–5) before continuing.");
-    //         sel.scrollIntoView({behavior:"smooth", block:"center"});
-    //         sel.focus();
-    //         return;
-    //     }
-    // }
+    const allSelects = document.querySelectorAll("#surveyForm select");
+    for (const sel of allSelects) {
+        if (!sel.value) {
+            alert("Please answer all 80 questions (1–5) before continuing.");
+            sel.scrollIntoView({behavior:"smooth", block:"center"});
+            sel.focus();
+            return;
+        }
+    }
 
     // 3. calculate scores
     const scores = calculateScores();
