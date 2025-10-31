@@ -624,7 +624,7 @@ function drawChart(scores) {
 }
 
 // ---------- 7. SEND TO GOOGLE SHEET ----------
-async function sendResultsToSheet(scores, topGifts) {
+function sendResultsToSheet(scores, topGifts) {
     const name  = document.getElementById("personName").value.trim();
     const email = document.getElementById("personEmail").value.trim();
 
@@ -633,33 +633,56 @@ async function sendResultsToSheet(scores, topGifts) {
         return false;
     }
 
-    const topGiftStrings = topGifts.map(g => `${g.name} (${g.score})`);
+    // build hidden form
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "https://script.google.com/macros/s/AKfycbx6H1uUfQlfgUeaunQQ6BP3pll_632repiiNGJ7P_CX1Y89a5m3LByykjkHPACDSJDz/exec"; // <-- your new deployed URL
+    form.target = "_blank"; // opens a tiny tab saying "Submitted. You can close this tab."
 
-    const payload = {
-        name,
-        email,
-        topGifts: topGiftStrings,
-        scores
-    };
+    // name + email
+    const fName = document.createElement("input");
+    fName.type = "hidden";
+    fName.name = "name";
+    fName.value = name;
+    form.appendChild(fName);
 
-    // IMPORTANT: use your FINAL_URL from the new deployment below
-    const FINAL_URL = "https://script.google.com/macros/s/AKfycbzoswIjqYUoAoeTeOcQ79PjCP503llnkvk4aQ12dLzAoDv2_Sbr43Cv8NK7CctJXXCK/exec";
+    const fEmail = document.createElement("input");
+    fEmail.type = "hidden";
+    fEmail.name = "email";
+    fEmail.value = email;
+    form.appendChild(fEmail);
 
-    try {
-        // Fire-and-forget: we don't block the user on CORS/readback
-        fetch(FINAL_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-        }).catch(err => {
-            console.warn("Background save failed:", err);
-        });
-    } catch (err) {
-        console.warn("Background save threw:", err);
+    // top 3 gifts
+    // topGifts is [{name:"Mercy", score:23}, ...]
+    for (let i = 0; i < 3; i++) {
+        const giftField = document.createElement("input");
+        giftField.type = "hidden";
+        giftField.name = "topGift" + i;
+        if (topGifts[i]) {
+            giftField.value = `${topGifts[i].name} (${topGifts[i].score})`;
+        } else {
+            giftField.value = "";
+        }
+        form.appendChild(giftField);
     }
+
+    // scores array (length 16)
+    for (let i = 0; i < scores.length; i++) {
+        const scoreField = document.createElement("input");
+        scoreField.type  = "hidden";
+        scoreField.name  = "score" + i;
+        scoreField.value = scores[i];
+        form.appendChild(scoreField);
+    }
+
+    // attach form to page temporarily + submit
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
 
     return true;
 }
+
 
 
 // ---------- 8. MAIN BUTTON HANDLER ----------
