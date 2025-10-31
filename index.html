@@ -633,49 +633,42 @@ function sendResultsToSheet(scores, topGifts) {
         return false;
     }
 
-    // build hidden form
+    // Create a hidden iframe as a background target
+    let iframe = document.getElementById("hiddenSubmitFrame");
+    if (!iframe) {
+        iframe = document.createElement("iframe");
+        iframe.name = "hiddenSubmitFrame";
+        iframe.id = "hiddenSubmitFrame";
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+    }
+
+    // Build form
     const form = document.createElement("form");
     form.method = "POST";
-    form.action = "https://script.google.com/macros/s/AKfycbx6H1uUfQlfgUeaunQQ6BP3pll_632repiiNGJ7P_CX1Y89a5m3LByykjkHPACDSJDz/exec"; // <-- your new deployed URL
-    form.target = "_blank"; // opens a tiny tab saying "Submitted. You can close this tab."
+    form.action = "https://script.google.com/macros/s/AKfycbx6H1uUfQlfgUeaunQQ6BP3pll_632repiiNGJ7P_CX1Y89a5m3LByykjkHPACDSJDz/exec"; // <-- your Apps Script Web App URL
+    form.target = "hiddenSubmitFrame"; // submit silently into the hidden iframe
 
-    // name + email
-    const fName = document.createElement("input");
-    fName.type = "hidden";
-    fName.name = "name";
-    fName.value = name;
-    form.appendChild(fName);
+    // Add form fields
+    const addField = (name, value) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+    };
 
-    const fEmail = document.createElement("input");
-    fEmail.type = "hidden";
-    fEmail.name = "email";
-    fEmail.value = email;
-    form.appendChild(fEmail);
+    addField("name", name);
+    addField("email", email);
 
-    // top 3 gifts
-    // topGifts is [{name:"Mercy", score:23}, ...]
     for (let i = 0; i < 3; i++) {
-        const giftField = document.createElement("input");
-        giftField.type = "hidden";
-        giftField.name = "topGift" + i;
-        if (topGifts[i]) {
-            giftField.value = `${topGifts[i].name} (${topGifts[i].score})`;
-        } else {
-            giftField.value = "";
-        }
-        form.appendChild(giftField);
+        addField("topGift" + i, topGifts[i] ? `${topGifts[i].name} (${topGifts[i].score})` : "");
     }
 
-    // scores array (length 16)
     for (let i = 0; i < scores.length; i++) {
-        const scoreField = document.createElement("input");
-        scoreField.type  = "hidden";
-        scoreField.name  = "score" + i;
-        scoreField.value = scores[i];
-        form.appendChild(scoreField);
+        addField("score" + i, scores[i]);
     }
 
-    // attach form to page temporarily + submit
     document.body.appendChild(form);
     form.submit();
     document.body.removeChild(form);
