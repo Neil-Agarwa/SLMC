@@ -113,6 +113,55 @@
         overflow-y: auto;
     }
 
+    .send-card {
+        background:#fff;
+        border:1px solid var(--border-card);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+        padding:1.25rem 1.5rem;
+        font-size:.85rem;
+        line-height:1.4;
+        color:var(--text-main);
+        margin-bottom:1rem;
+    }
+    .send-card h3 {
+        margin:0 0 .5rem 0;
+        color:var(--accent);
+        font-size:.9rem;
+        font-weight:600;
+    }
+    .send-card small {
+        color:var(--text-dim);
+        font-size:.75rem;
+        line-height:1.4;
+        display:block;
+        margin-bottom:.75rem;
+    }
+    .send-field {
+        margin-bottom:.75rem;
+    }
+    .send-field label {
+        font-size:.8rem;
+        color:#334155;
+        display:block;
+        margin-bottom:.25rem;
+        font-weight:500;
+    }
+    .send-field input {
+        width:100%;
+        padding:.5rem .6rem;
+        border:1px solid var(--border-card);
+        border-radius:.5rem;
+        font-size:.9rem;
+        color:var(--text-main);
+        background:#fff;
+        box-sizing:border-box;
+    }
+    .send-field input:focus {
+        outline:2px solid var(--accent);
+        outline-offset:1px;
+    }
+
     .instructions {
         font-size: 0.9rem;
         color: var(--text-dim);
@@ -234,54 +283,6 @@
         font-size: .9rem;
     }
 
-    .send-card {
-        background:#fff;
-        border:1px solid var(--border-card);
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-card);
-        padding:1.25rem 1.5rem;
-        font-size:.85rem;
-        line-height:1.4;
-        color:var(--text-main);
-    }
-    .send-card h3 {
-        margin:0 0 .5rem 0;
-        color:var(--accent);
-        font-size:.9rem;
-        font-weight:600;
-    }
-    .send-card small {
-        color:var(--text-dim);
-        font-size:.75rem;
-        line-height:1.4;
-        display:block;
-        margin-bottom:.75rem;
-    }
-    .send-field {
-        margin-bottom:.75rem;
-    }
-    .send-field label {
-        font-size:.8rem;
-        color:#334155;
-        display:block;
-        margin-bottom:.25rem;
-        font-weight:500;
-    }
-    .send-field input {
-        width:100%;
-        padding:.5rem .6rem;
-        border:1px solid var(--border-card);
-        border-radius:.5rem;
-        font-size:.9rem;
-        color:var(--text-main);
-        background:#fff;
-        box-sizing:border-box;
-    }
-    .send-field input:focus {
-        outline:2px solid var(--accent);
-        outline-offset:1px;
-    }
-
     footer {
         color: var(--text-dim);
         font-size: .7rem;
@@ -317,6 +318,23 @@
 <div class="layout">
     <!-- LEFT COLUMN: FORM -->
     <div class="card">
+
+        <!-- NEW: Name / Email lives up here -->
+        <div class="send-card">
+            <h3>Your Info (for ministry follow-up)</h3>
+            <small>This helps us connect you with serving opportunities that match your gifts. Your results will also be saved when you submit.</small>
+
+            <div class="send-field">
+                <label for="personName">Name</label>
+                <input id="personName" placeholder="First and Last Name">
+            </div>
+
+            <div class="send-field">
+                <label for="personEmail">Email</label>
+                <input id="personEmail" placeholder="name@email.com">
+            </div>
+        </div>
+
         <div class="instructions">
             <p class="instructions-title">How to answer</p>
             <p>For each statement, choose the number that best describes you:</p>
@@ -332,24 +350,8 @@
 
         <form id="surveyForm"></form>
 
-        <!-- Name/email block lives here now -->
-        <div class="send-card" style="margin-top:1rem;">
-            <h3>Your Info (for ministry follow-up)</h3>
-            <small>This helps us connect you with serving opportunities that match your gifts.</small>
-
-            <div class="send-field">
-                <label for="personName">Name</label>
-                <input id="personName" placeholder="First and Last Name">
-            </div>
-
-            <div class="send-field">
-                <label for="personEmail">Email</label>
-                <input id="personEmail" placeholder="name@email.com">
-            </div>
-
-            <!-- The only button on the page -->
-            <button id="submitBtn" type="button">Show My Gifts</button>
-        </div>
+        <!-- Button at the bottom, by itself -->
+        <button id="submitBtn" type="button">Show My Gifts</button>
     </div>
 
     <!-- RIGHT COLUMN: RESULTS -->
@@ -482,7 +484,7 @@ const gifts = [
     { name: "Hospitality",       items: [15,32,45,60,78] }
 ];
 
-let chart; // Chart.js instance
+let chart; // chart.js instance
 
 // ---------- 3. BUILD THE FORM ----------
 function buildForm() {
@@ -560,7 +562,7 @@ function showTop3(scores) {
         top3Div.appendChild(row);
     }
 
-    return pairs.slice(0,3); // return top3 for sending
+    return pairs.slice(0,3); // return top 3 so we can send it
 }
 
 // ---------- 6. DRAW / UPDATE CHART ----------
@@ -626,13 +628,11 @@ async function sendResultsToSheet(scores, topGifts) {
     const name  = document.getElementById("personName").value.trim();
     const email = document.getElementById("personEmail").value.trim();
 
-    // it's fair to require name/email for ministry follow-up
     if (!name || !email) {
-        alert("Please enter your name and email so we can follow up.");
+        alert("Please enter your name and email at the top before submitting.");
         return false;
     }
 
-    // format topGifts into ["GiftName (Score)", ...]
     const topGiftStrings = topGifts.map(g => `${g.name} (${g.score})`);
 
     const payload = {
@@ -650,11 +650,11 @@ async function sendResultsToSheet(scores, topGifts) {
         });
 
         if (!res.ok) {
-            alert("We calculated your gifts, but there was an issue saving them for follow-up.");
+            alert("Your gifts were calculated, but there was an issue saving them for follow-up.");
             return false;
         }
     } catch (err) {
-        alert("We calculated your gifts, but there was a network issue saving them for follow-up.");
+        alert("Your gifts were calculated, but there was a network issue saving them for follow-up.");
         return false;
     }
     return true;
@@ -662,7 +662,16 @@ async function sendResultsToSheet(scores, topGifts) {
 
 // ---------- 8. MAIN BUTTON HANDLER ----------
 document.getElementById("submitBtn").addEventListener("click", async () => {
-    // 1. validate that all 80 answers are filled
+    // 1. validate name/email first
+    const nameOK  = document.getElementById("personName").value.trim() !== "";
+    const emailOK = document.getElementById("personEmail").value.trim() !== "";
+    if (!nameOK || !emailOK) {
+        alert("Please enter your name and email at the top before submitting.");
+        document.getElementById("personName").scrollIntoView({behavior:"smooth", block:"center"});
+        return;
+    }
+
+    // 2. validate that all 80 answers are filled
     const allSelects = document.querySelectorAll("#surveyForm select");
     for (const sel of allSelects) {
         if (!sel.value) {
@@ -673,22 +682,20 @@ document.getElementById("submitBtn").addEventListener("click", async () => {
         }
     }
 
-    // 2. calculate scores
+    // 3. calculate scores
     const scores = calculateScores();
 
-    // 3. update chart + top 3 for the user
+    // 4. update chart + top 3 for the user
     drawChart(scores);
     const top3 = showTop3(scores);
 
-    // 4. send to Google Sheets in background
+    // 5. send to Google Sheets in background
     const ok = await sendResultsToSheet(scores, top3);
-
     if (ok) {
-        // optional: visual confirmation after save succeeds
         console.log("Results successfully sent to sheet.");
     }
 
-    // 5. scroll to chart so they see it
+    // 6. scroll to chart so they see it
     document.getElementById("resultChart").scrollIntoView({ behavior: "smooth" });
 });
 
