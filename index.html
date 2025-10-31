@@ -13,27 +13,23 @@
         --border-card: #dbe5f5;
         --text-main: #1e293b;
         --text-dim: #64748b;
-        --accent: #1c4f9e; /* Sugar Land blue vibe */
+        --accent: #1c4f9e;
         --accent-light: #eef6ff;
         --shadow-card: 0 24px 50px -12px rgba(0,0,0,0.08);
         --radius-lg: 1rem;
         --radius-md: .75rem;
         --radius-sm: .5rem;
     }
-
     body {
         background: var(--bg-page);
         color: var(--text-main);
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         margin: 0;
-        padding: 0;
         line-height: 1.45;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-
-    /* HEADER */
     .site-header {
         width: 100%;
         background: var(--bg-page);
@@ -41,7 +37,6 @@
         box-shadow: 0 12px 24px -8px rgba(0,0,0,0.07);
         padding: 1rem 1.5rem;
     }
-
     .header-inner {
         max-width: 1300px;
         margin: 0 auto;
@@ -50,62 +45,50 @@
         align-items: center;
         gap: 1rem;
     }
-
     .header-left {
         display: flex;
         align-items: center;
-        gap: .75rem;
+        gap: 16px; /* spacing between logo and text */
         min-width: 250px;
     }
-
     .church-logo {
         height: 60px;
         width: auto;
         object-fit: contain;
     }
-
     .church-text {
         color: var(--accent);
         font-weight: 600;
         font-size: 1rem;
         line-height: 1.2;
     }
-
     .church-text span {
         display: block;
         color: var(--text-main);
         font-weight: 500;
         font-size: .8rem;
     }
-
     .header-right {
         flex: 1;
         min-width: 200px;
         text-align: right;
         color: var(--text-main);
     }
-
+    @media(max-width:900px){
+        .header-right { text-align:left; }
+    }
     .header-title {
         font-size: 1.1rem;
         font-weight: 600;
         color: var(--text-main);
         line-height: 1.2;
     }
-
     .header-subtitle {
         font-size: .8rem;
         color: var(--text-dim);
         line-height: 1.3;
         margin-top: .25rem;
     }
-
-    @media(max-width: 900px){
-        .header-right {
-            text-align: left;
-        }
-    }
-
-    /* PAGE BODY LAYOUT */
     .layout {
         max-width: 1300px;
         width: 100%;
@@ -115,14 +98,9 @@
         padding: 2rem 1.5rem 4rem 1.5rem;
         box-sizing: border-box;
     }
-
-    @media(max-width: 900px){
-        .layout {
-            grid-template-columns: 1fr;
-        }
+    @media(max-width:900px){
+        .layout { grid-template-columns: 1fr; }
     }
-
-    /* CARDS */
     .card {
         background: var(--bg-card);
         border: 1px solid var(--border-card);
@@ -132,37 +110,6 @@
         max-height: 80vh;
         overflow-y: auto;
     }
-
-    .results-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border-card);
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-card);
-        padding: 1.5rem 2rem;
-        margin-bottom: 1rem;
-    }
-
-    .top3 {
-        background: var(--accent-light);
-        border: 1px solid var(--border-card);
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-card);
-        padding: 1.25rem 1.5rem;
-    }
-
-    .reflect-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border-card);
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-card);
-        padding: 1.25rem 1.5rem;
-        margin-top: 1rem;
-        font-size: .85rem;
-        color: var(--text-dim);
-        line-height: 1.4;
-    }
-
-    /* SECTIONS / TEXT */
     .instructions {
         font-size: 0.9rem;
         color: var(--text-dim);
@@ -172,54 +119,31 @@
         padding: 1rem 1rem;
         margin-bottom: 1rem;
     }
-
     .instructions-title {
         color: var(--accent);
         font-weight: 600;
         margin: 0 0 .5rem 0;
         font-size: .9rem;
     }
-
     .question {
         border-bottom: 1px solid var(--border-card);
         padding: 0.75rem 0 1rem 0;
         margin-bottom: 0.75rem;
     }
-
     .q-text {
         font-size: 0.9rem;
         margin-bottom: 0.5rem;
         color: var(--text-main);
         font-weight: 500;
     }
-
     .q-scale {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         gap: .5rem;
         font-size: .8rem;
         color: var(--text-dim);
-        flex-wrap: wrap;
     }
-
-    /* INPUTS */
-    input[type="text"],
-    input[type="email"] {
-        width: 100%;
-        padding: .5rem .6rem;
-        border: 1px solid var(--border-card);
-        border-radius: var(--radius-sm);
-        font-size: 0.9rem;
-        font-family: inherit;
-        color: var(--text-main);
-        box-sizing: border-box;
-    }
-    input[type="text"]:focus,
-    input[type="email"]:focus {
-        outline: 2px solid var(--accent);
-        outline-offset: 1px;
-    }
-
     select {
         background: #fff;
         color: var(--text-main);
@@ -233,8 +157,9 @@
         outline: 2px solid var(--accent);
         outline-offset: 1px;
     }
-
-    button.action-btn {
+    button#submitBtn,
+    button#exportBtn,
+    button#sendBtn {
         appearance: none;
         background: var(--accent);
         border: 0;
@@ -247,13 +172,20 @@
         cursor: pointer;
         margin-top: 1rem;
         box-shadow: 0 20px 40px -8px rgba(28,79,158,.4);
-        text-align: center;
     }
-    button.action-btn:hover {
+    button#submitBtn:hover,
+    button#exportBtn:hover,
+    button#sendBtn:hover {
         filter: brightness(1.08);
     }
-
-    /* RESULTS SIDE */
+    .results-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border-card);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+        padding: 1.5rem 2rem;
+        margin-bottom: 1rem;
+    }
     .results-card h2 {
         margin-top: 0;
         font-size: 1rem;
@@ -261,7 +193,6 @@
         font-weight: 600;
         color: var(--text-main);
     }
-
     #chartWrapper {
         width: 100%;
         max-height: 420px;
@@ -269,14 +200,20 @@
     #resultChart {
         max-height: 420px;
     }
-
     .score-note {
         color: var(--text-dim);
         font-size: .8rem;
         line-height: 1.4;
         margin-top: .75rem;
     }
-
+    .top3 {
+        background: var(--accent-light);
+        border: 1px solid var(--border-card);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+        padding: 1.25rem 1.5rem;
+        margin-bottom:1rem;
+    }
     .top3 h3 {
         margin-top: 0;
         color: var(--accent);
@@ -284,40 +221,59 @@
         font-weight: 600;
         line-height: 1.3;
     }
-
     .top3-list div {
         margin-bottom: .4rem;
         font-weight: 500;
         color: var(--text-main);
         font-size: .9rem;
     }
-
-    .reflect-card h3 {
-        margin: 0 0 .75rem 0;
-        color: var(--text-main);
-        font-size: .9rem;
-        font-weight: 600;
+    .send-card {
+        background:#fff;
+        border:1px solid var(--border-card);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-card);
+        padding:1.25rem 1.5rem;
+        font-size:.85rem;
+        line-height:1.4;
+        color:var(--text-main);
     }
-
-    .reflect-card textarea {
-        width: 100%;
-        min-height: 3rem;
-        resize: vertical;
-        border-radius: var(--radius-sm);
-        border: 1px solid var(--border-card);
-        font-family: inherit;
-        font-size: .9rem;
-        padding: .5rem .6rem;
-        color: var(--text-main);
-        background: #fff;
-        box-sizing: border-box;
-        margin-bottom: .75rem;
+    .send-card h3 {
+        margin:0 0 .5rem 0;
+        color:var(--accent);
+        font-size:.9rem;
+        font-weight:600;
     }
-    .reflect-card textarea:focus {
-        outline: 2px solid var(--accent);
-        outline-offset: 1px;
+    .send-card small {
+        color:var(--text-dim);
+        font-size:.75rem;
+        line-height:1.4;
+        display:block;
+        margin-bottom:.75rem;
     }
-
+    .send-field {
+        margin-bottom:.75rem;
+    }
+    .send-field label {
+        font-size:.8rem;
+        color:#334155;
+        display:block;
+        margin-bottom:.25rem;
+        font-weight:500;
+    }
+    .send-field input {
+        width:100%;
+        padding:.5rem .6rem;
+        border:1px solid var(--border-card);
+        border-radius:.5rem;
+        font-size:.9rem;
+        color:var(--text-main);
+        background:#fff;
+        box-sizing:border-box;
+    }
+    .send-field input:focus {
+        outline:2px solid var(--accent);
+        outline-offset:1px;
+    }
     footer {
         color: var(--text-dim);
         font-size: .7rem;
@@ -327,17 +283,10 @@
         line-height: 1.4;
         padding: 0 1.5rem;
     }
-
-    /* container for the "Get My Results" button under the form */
-    .after-submit-actions {
-        text-align:center;
-        margin-top:1.5rem;
-    }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="site-header">
     <div class="header-inner">
         <div class="header-left">
@@ -357,37 +306,9 @@
     </div>
 </header>
 
-<!-- BODY LAYOUT -->
 <div class="layout">
-
     <!-- LEFT COLUMN: FORM -->
     <div class="card">
-
-        <!-- PARTICIPANT INFO -->
-        <div class="instructions">
-            <p class="instructions-title">Participant Info</p>
-            <p>Please enter your name and email.</p>
-        </div>
-
-        <form id="userInfoForm">
-            <div class="question">
-                <div class="q-text">First Name:</div>
-                <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name">
-            </div>
-
-            <div class="question">
-                <div class="q-text">Last Name:</div>
-                <input type="text" id="lastName" name="lastName" required placeholder="Enter your last name">
-            </div>
-
-            <div class="question">
-                <div class="q-text">Email:</div>
-                <input type="email" id="email" name="email" required placeholder="Enter your email address">
-            </div>
-        </form>
-
-
-        <!-- INSTRUCTIONS FOR QUESTIONS -->
         <div class="instructions">
             <p class="instructions-title">How to answer</p>
             <p>For each statement, choose the number that best describes you:</p>
@@ -401,26 +322,20 @@
             <p style="margin-bottom:0;">Please answer all 80.</p>
         </div>
 
-        <!-- SURVEY QUESTIONS GO HERE -->
         <form id="surveyForm"></form>
 
-        <!-- SUBMIT BUTTON -->
-        <button id="submitBtn" type="button" class="action-btn">Show My Gifts</button>
-
-        <!-- AFTER SUBMIT BUTTON -->
-        <div class="after-submit-actions">
-            <button id="getResultsBtn" type="button" class="action-btn" style="display:none; width:auto; padding-left:1.5rem; padding-right:1.5rem;">
-                Get My Results
-            </button>
-        </div>
+        <button id="submitBtn" type="button">Show My Gifts</button>
     </div>
 
-    <!-- RIGHT COLUMN: RESULTS / REFLECTION -->
+    <!-- RIGHT COLUMN: RESULTS / SEND -->
     <div>
         <div class="results-card">
             <h2>Your Gift Profile</h2>
             <div id="chartWrapper">
                 <canvas id="resultChart" height="420"></canvas>
+            </div>
+            <div class="score-note">
+                Each bar is one spiritual gift. Score range is 0–25 (5 questions × max 5). Higher scores often point to areas where God has especially equipped you to serve.
             </div>
         </div>
 
@@ -431,26 +346,31 @@
             </div>
         </div>
 
-        <div class="reflect-card">
-            <h3>Reflect & Pray</h3>
-            <div style="margin-bottom:.5rem;">
-                The gifts I have begun to discover in my life are:
-            </div>
-            <textarea placeholder="1."></textarea>
-            <textarea placeholder="2."></textarea>
-            <textarea placeholder="3."></textarea>
+        <div class="send-card">
+            <h3>Share with Sugar Land Methodist</h3>
+            <small>We’ll receive only your contact info, your top 3 gifts, and all 16 gift scores so we can help you find a great serving fit. We will not see every individual question.</small>
 
-            <div style="margin-bottom:.5rem;">
-                After prayer, I sense God may be calling me to serve by…
+            <div class="send-field">
+                <label for="personName">Name</label>
+                <input id="personName" placeholder="First and Last Name">
             </div>
-            <textarea placeholder="Example: mentoring students, hospitality, music ministry, local outreach, care ministry, teaching, etc."></textarea>
+
+            <div class="send-field">
+                <label for="personEmail">Email</label>
+                <input id="personEmail" placeholder="name@email.com">
+            </div>
+
+            <button id="sendBtn" type="button">Send My Results to the Church</button>
         </div>
     </div>
 </div>
 
+<footer>
+    Spiritual Gifts list and question mapping adapted from the Spiritual Gifts Survey (© 2003 Lifeway Christian Resources, revised 2022).
+</footer>
 
 <script>
-// 1. ALL 80 QUESTIONS
+// 1. QUESTIONS (same as before)
 const questions = [
     "1. I have the ability to organize ideas, resources, time, and people effectively.",
     "2. I am willing to study and prepare for the task of teaching.",
@@ -478,7 +398,7 @@ const questions = [
     "24. I spend time digging into facts.",
     "25. I feel that I have a message from God to deliver to others.",
     "26. I can recognize when a person is genuine/honest.",
-    "27. I am a person of vision (a clear mental portrait of a preferable future given by God). I am able to communicate vision in such a way that others commit to making the vision a reality.",
+    "27. I am a person of vision ...",
     "28. I am willing to yield to God’s will rather than question and waver.",
     "29. I would like to be more active in getting the gospel to people in other countries.",
     "30. It makes me happy to do things for people in need.",
@@ -491,7 +411,7 @@ const questions = [
     "37. I am drawn to people who are hurting.",
     "38. I am a generous giver.",
     "39. I am able to discover new truths in Scripture.",
-    "40. I have spiritual insights from Scripture concerning issues and people that compel me to speak out.",
+    "40. I have spiritual insights from Scripture ...",
     "41. I can sense when a person is acting in accordance with God’s will.",
     "42. I can trust in God even when things look dark.",
     "43. I can determine where God wants a group to go and help it get there.",
@@ -502,7 +422,7 @@ const questions = [
     "48. I often am consulted when fellow Christians are struggling to make difficult decisions.",
     "49. I think about how I can comfort and encourage others in my congregation.",
     "50. I am able to give spiritual direction to others.",
-    "51. I am able to present the gospel to lost persons in such a way that they accept the Lord and His salvation.",
+    "51. I am able to present the gospel to lost persons ...",
     "52. I possess an unusual capacity to understand the feelings of those in distress.",
     "53. I have a strong sense of stewardship based on the recognition that God owns all things.",
     "54. I have delivered to other persons messages that have come directly from God.",
@@ -520,8 +440,8 @@ const questions = [
     "66. I recognize the signs of stress and distress in others.",
     "67. I desire to give generously and unpretentiously to worthwhile projects and ministries.",
     "68. I can organize facts into meaningful relationships.",
-    "69. God gives me messages to deliver to His People.",
-    "70. I am able to sense whether people are being honest when they tell of their religious experiences.",
+    "69. God gives me messages to deliver to His people.",
+    "70. I am able to sense whether people are being honest ...",
     "71. I enjoy presenting the gospel to persons of other cultures and backgrounds.",
     "72. I enjoy doing little things that help people.",
     "73. I can give a clear, uncomplicated presentation of the gospel.",
@@ -534,7 +454,7 @@ const questions = [
     "80. I feel assured that a situation will change for the glory of God even when the situation seems impossible."
 ];
 
-// 2. GIFT MAPPING
+// 2. GIFT DEFINITIONS (order matters!)
 const gifts = [
     { name: "Leadership",        items: [6,16,27,43,65] },
     { name: "Administration",    items: [1,17,31,47,59] },
@@ -554,10 +474,10 @@ const gifts = [
     { name: "Hospitality",       items: [15,32,45,60,78] }
 ];
 
-// 3. BUILD FORM
+let chart; // Chart.js instance
+
 function buildForm() {
     const form = document.getElementById("surveyForm");
-
     questions.forEach((text, i) => {
         const qNum = i + 1;
 
@@ -601,7 +521,6 @@ function buildForm() {
     });
 }
 
-// 4. CALCULATE SCORES
 function calculateScores() {
     const form = document.getElementById("surveyForm");
     const scores = [];
@@ -618,7 +537,6 @@ function calculateScores() {
     return scores;
 }
 
-// 5. TOP 3 GIFTS
 function showTop3(scores) {
     const pairs = gifts.map((g, idx) => ({ name: g.name, score: scores[idx] }));
     pairs.sort((a,b) => b.score - a.score);
@@ -632,8 +550,6 @@ function showTop3(scores) {
     }
 }
 
-// 6. CHART
-let chart;
 function drawChart(scores) {
     const ctx = document.getElementById("resultChart").getContext("2d");
     const labels = gifts.map(g => g.name);
@@ -665,23 +581,16 @@ function drawChart(scores) {
                     x: {
                         beginAtZero: true,
                         max: 25,
-                        grid: {
-                            color: "rgba(0,0,0,0.05)"
-                        },
+                        grid: { color: "rgba(0,0,0,0.05)" },
                         ticks: {
                             color: "#475569"
                         }
                     },
                     y: {
-                        grid: {
-                            color: "rgba(0,0,0,0.03)"
-                        },
+                        grid: { color: "rgba(0,0,0,0.03)" },
                         ticks: {
                             color: "#1e293b",
-                            font: {
-                                size: 12,
-                                weight: "500"
-                            }
+                            font: { size: 12, weight: "500" }
                         }
                     }
                 },
@@ -689,9 +598,7 @@ function drawChart(scores) {
                     legend: {
                         labels: {
                             color: "#1e293b",
-                            font: {
-                                size: 12
-                            }
+                            font: { size: 12 }
                         }
                     }
                 }
@@ -700,17 +607,9 @@ function drawChart(scores) {
     }
 }
 
-// 7. HANDLE SUBMIT
-function handleSubmit() {
-    const first = document.getElementById("firstName").value.trim();
-    const last = document.getElementById("lastName").value.trim();
-    const email = document.getElementById("email").value.trim();
-
-    if (!first || !last || !email) {
-        alert("Please fill out your name and email before continuing.");
-        return;
-    }
-
+// show chart and top3 when user clicks "Show My Gifts"
+document.getElementById("submitBtn").addEventListener("click", () => {
+    // validate required answers
     const allSelects = document.querySelectorAll("#surveyForm select");
     for (const sel of allSelects) {
         if (!sel.value) {
@@ -725,36 +624,67 @@ function handleSubmit() {
     drawChart(scores);
     showTop3(scores);
 
+    // scroll to chart on phones
     document.getElementById("resultChart").scrollIntoView({ behavior: "smooth" });
+});
 
-    // Reveal "Get My Results" button
-    document.getElementById("getResultsBtn").style.display = "inline-block";
-}
-
-// 8. HANDLE GET RESULTS (download CSV)
-function handleGetResults() {
-    const first = document.getElementById("firstName").value.trim();
-    const last = document.getElementById("lastName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const scores = calculateScores();
-
-    // Build CSV
-    let csv = `Name,${first} ${last}\nEmail,${email}\n\nGift,Score\n`;
-    for (let i = 0; i < gifts.length; i++) {
-        csv += `${gifts[i].name},${scores[i]}\n`;
+// 3. SEND RESULTS TO GOOGLE SHEET
+async function sendResultsToSheet() {
+    // must have calculated scores already
+    if (!chart) {
+        alert("Please click 'Show My Gifts' first so we can score your results.");
+        return;
     }
 
-    const blob = new Blob([csv], { type: "text/csv" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `${first}_${last}_spiritual_gifts.csv`;
-    link.click();
+    // get scores in the same order as gifts[]
+    const scores = calculateScores();
+
+    // figure out top 3 gifts
+    const pairs = gifts.map((g, idx) => ({ name: g.name, score: scores[idx] }));
+    pairs.sort((a,b) => b.score - a.score);
+    const topGifts = [
+        `${pairs[0].name} (${pairs[0].score})`,
+        `${pairs[1].name} (${pairs[1].score})`,
+        `${pairs[2].name} (${pairs[2].score})`,
+    ];
+
+    // get name/email from inputs
+    const name  = document.getElementById("personName").value.trim();
+    const email = document.getElementById("personEmail").value.trim();
+
+    if (!name || !email) {
+        alert("Please enter your name and email so the church can follow up.");
+        return;
+    }
+
+    const payload = {
+        name,
+        email,
+        topGifts,
+        scores
+    };
+
+    try {
+        const res = await fetch("https://script.google.com/macros/s/AKfycby3h3tDfeHM11HCiJ1sq29UrALKLd2Y11Yx_oMKm91-mOzRb12DLSlH2F0m5eSkIeEkUw/exec", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+            alert("Thank you! Your results have been sent to Sugar Land Methodist.");
+        } else {
+            alert("Sorry, there was an issue sending your results.");
+        }
+    } catch (err) {
+        alert("Network error sending results.");
+    }
 }
 
-// 9. INIT
+document.getElementById("sendBtn").addEventListener("click", sendResultsToSheet);
+
+// init form on load
 buildForm();
-document.getElementById("submitBtn").addEventListener("click", handleSubmit);
-document.getElementById("getResultsBtn").addEventListener("click", handleGetResults);
 </script>
 </body>
 </html>
