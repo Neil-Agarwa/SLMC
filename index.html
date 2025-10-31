@@ -48,7 +48,7 @@
     .header-left {
         display: flex;
         align-items: center;
-        gap: 16px; /* spacing between logo and text */
+        gap: 16px;
         min-width: 250px;
     }
     .church-logo {
@@ -89,6 +89,7 @@
         line-height: 1.3;
         margin-top: .25rem;
     }
+
     .layout {
         max-width: 1300px;
         width: 100%;
@@ -101,6 +102,7 @@
     @media(max-width:900px){
         .layout { grid-template-columns: 1fr; }
     }
+
     .card {
         background: var(--bg-card);
         border: 1px solid var(--border-card);
@@ -110,6 +112,7 @@
         max-height: 80vh;
         overflow-y: auto;
     }
+
     .instructions {
         font-size: 0.9rem;
         color: var(--text-dim);
@@ -125,6 +128,7 @@
         margin: 0 0 .5rem 0;
         font-size: .9rem;
     }
+
     .question {
         border-bottom: 1px solid var(--border-card);
         padding: 0.75rem 0 1rem 0;
@@ -144,6 +148,7 @@
         font-size: .8rem;
         color: var(--text-dim);
     }
+
     select {
         background: #fff;
         color: var(--text-main);
@@ -157,9 +162,8 @@
         outline: 2px solid var(--accent);
         outline-offset: 1px;
     }
-    button#submitBtn,
-    button#exportBtn,
-    button#sendBtn {
+
+    button#submitBtn {
         appearance: none;
         background: var(--accent);
         border: 0;
@@ -173,11 +177,10 @@
         margin-top: 1rem;
         box-shadow: 0 20px 40px -8px rgba(28,79,158,.4);
     }
-    button#submitBtn:hover,
-    button#exportBtn:hover,
-    button#sendBtn:hover {
+    button#submitBtn:hover {
         filter: brightness(1.08);
     }
+
     .results-card {
         background: var(--bg-card);
         border: 1px solid var(--border-card);
@@ -193,6 +196,7 @@
         font-weight: 600;
         color: var(--text-main);
     }
+
     #chartWrapper {
         width: 100%;
         max-height: 420px;
@@ -200,12 +204,14 @@
     #resultChart {
         max-height: 420px;
     }
+
     .score-note {
         color: var(--text-dim);
         font-size: .8rem;
         line-height: 1.4;
         margin-top: .75rem;
     }
+
     .top3 {
         background: var(--accent-light);
         border: 1px solid var(--border-card);
@@ -227,6 +233,7 @@
         color: var(--text-main);
         font-size: .9rem;
     }
+
     .send-card {
         background:#fff;
         border:1px solid var(--border-card);
@@ -274,6 +281,7 @@
         outline:2px solid var(--accent);
         outline-offset:1px;
     }
+
     footer {
         color: var(--text-dim);
         font-size: .7rem;
@@ -324,10 +332,27 @@
 
         <form id="surveyForm"></form>
 
-        <button id="submitBtn" type="button">Show My Gifts</button>
+        <!-- Name/email block lives here now -->
+        <div class="send-card" style="margin-top:1rem;">
+            <h3>Your Info (for ministry follow-up)</h3>
+            <small>This helps us connect you with serving opportunities that match your gifts.</small>
+
+            <div class="send-field">
+                <label for="personName">Name</label>
+                <input id="personName" placeholder="First and Last Name">
+            </div>
+
+            <div class="send-field">
+                <label for="personEmail">Email</label>
+                <input id="personEmail" placeholder="name@email.com">
+            </div>
+
+            <!-- The only button on the page -->
+            <button id="submitBtn" type="button">Show My Gifts</button>
+        </div>
     </div>
 
-    <!-- RIGHT COLUMN: RESULTS / SEND -->
+    <!-- RIGHT COLUMN: RESULTS -->
     <div>
         <div class="results-card">
             <h2>Your Gift Profile</h2>
@@ -345,23 +370,6 @@
                 <div>Your top gifts will appear here after you submit.</div>
             </div>
         </div>
-
-        <div class="send-card">
-            <h3>Share with Sugar Land Methodist</h3>
-            <small>We’ll receive only your contact info, your top 3 gifts, and all 16 gift scores so we can help you find a great serving fit. We will not see every individual question.</small>
-
-            <div class="send-field">
-                <label for="personName">Name</label>
-                <input id="personName" placeholder="First and Last Name">
-            </div>
-
-            <div class="send-field">
-                <label for="personEmail">Email</label>
-                <input id="personEmail" placeholder="name@email.com">
-            </div>
-
-            <button id="sendBtn" type="button">Send My Results to the Church</button>
-        </div>
     </div>
 </div>
 
@@ -370,7 +378,7 @@
 </footer>
 
 <script>
-// 1. QUESTIONS (same as before)
+// ---------- 1. QUESTIONS ----------
 const questions = [
     "1. I have the ability to organize ideas, resources, time, and people effectively.",
     "2. I am willing to study and prepare for the task of teaching.",
@@ -398,7 +406,7 @@ const questions = [
     "24. I spend time digging into facts.",
     "25. I feel that I have a message from God to deliver to others.",
     "26. I can recognize when a person is genuine/honest.",
-    "27. I am a person of vision ...",
+    "27. I am a person of vision (a clear mental portrait of a preferable future given by God). I am able to communicate vision in such a way that others commit to making the vision a reality.",
     "28. I am willing to yield to God’s will rather than question and waver.",
     "29. I would like to be more active in getting the gospel to people in other countries.",
     "30. It makes me happy to do things for people in need.",
@@ -411,7 +419,7 @@ const questions = [
     "37. I am drawn to people who are hurting.",
     "38. I am a generous giver.",
     "39. I am able to discover new truths in Scripture.",
-    "40. I have spiritual insights from Scripture ...",
+    "40. I have spiritual insights from Scripture concerning issues and people that compel me to speak out.",
     "41. I can sense when a person is acting in accordance with God’s will.",
     "42. I can trust in God even when things look dark.",
     "43. I can determine where God wants a group to go and help it get there.",
@@ -422,7 +430,7 @@ const questions = [
     "48. I often am consulted when fellow Christians are struggling to make difficult decisions.",
     "49. I think about how I can comfort and encourage others in my congregation.",
     "50. I am able to give spiritual direction to others.",
-    "51. I am able to present the gospel to lost persons ...",
+    "51. I am able to present the gospel to lost persons in such a way that they accept the Lord and His salvation.",
     "52. I possess an unusual capacity to understand the feelings of those in distress.",
     "53. I have a strong sense of stewardship based on the recognition that God owns all things.",
     "54. I have delivered to other persons messages that have come directly from God.",
@@ -440,8 +448,8 @@ const questions = [
     "66. I recognize the signs of stress and distress in others.",
     "67. I desire to give generously and unpretentiously to worthwhile projects and ministries.",
     "68. I can organize facts into meaningful relationships.",
-    "69. God gives me messages to deliver to His people.",
-    "70. I am able to sense whether people are being honest ...",
+    "69. God gives me messages to deliver to His People.",
+    "70. I am able to sense whether people are being honest when they tell of their religious experiences.",
     "71. I enjoy presenting the gospel to persons of other cultures and backgrounds.",
     "72. I enjoy doing little things that help people.",
     "73. I can give a clear, uncomplicated presentation of the gospel.",
@@ -454,7 +462,7 @@ const questions = [
     "80. I feel assured that a situation will change for the glory of God even when the situation seems impossible."
 ];
 
-// 2. GIFT DEFINITIONS (order matters!)
+// ---------- 2. GIFT DEFINITIONS ----------
 const gifts = [
     { name: "Leadership",        items: [6,16,27,43,65] },
     { name: "Administration",    items: [1,17,31,47,59] },
@@ -476,6 +484,7 @@ const gifts = [
 
 let chart; // Chart.js instance
 
+// ---------- 3. BUILD THE FORM ----------
 function buildForm() {
     const form = document.getElementById("surveyForm");
     questions.forEach((text, i) => {
@@ -521,6 +530,7 @@ function buildForm() {
     });
 }
 
+// ---------- 4. CALCULATE SCORES ----------
 function calculateScores() {
     const form = document.getElementById("surveyForm");
     const scores = [];
@@ -537,6 +547,7 @@ function calculateScores() {
     return scores;
 }
 
+// ---------- 5. TOP 3 GIFTS DISPLAY ----------
 function showTop3(scores) {
     const pairs = gifts.map((g, idx) => ({ name: g.name, score: scores[idx] }));
     pairs.sort((a,b) => b.score - a.score);
@@ -548,8 +559,11 @@ function showTop3(scores) {
         row.textContent = `${i+1}) ${pairs[i].name} (${pairs[i].score})`;
         top3Div.appendChild(row);
     }
+
+    return pairs.slice(0,3); // return top3 for sending
 }
 
+// ---------- 6. DRAW / UPDATE CHART ----------
 function drawChart(scores) {
     const ctx = document.getElementById("resultChart").getContext("2d");
     const labels = gifts.map(g => g.name);
@@ -607,60 +621,24 @@ function drawChart(scores) {
     }
 }
 
-// show chart and top3 when user clicks "Show My Gifts"
-document.getElementById("submitBtn").addEventListener("click", () => {
-    // validate required answers
-    const allSelects = document.querySelectorAll("#surveyForm select");
-    for (const sel of allSelects) {
-        if (!sel.value) {
-            alert("Please answer all 80 questions (1–5) before continuing.");
-            sel.scrollIntoView({behavior:"smooth", block:"center"});
-            sel.focus();
-            return;
-        }
-    }
-
-    const scores = calculateScores();
-    drawChart(scores);
-    showTop3(scores);
-
-    // scroll to chart on phones
-    document.getElementById("resultChart").scrollIntoView({ behavior: "smooth" });
-});
-
-// 3. SEND RESULTS TO GOOGLE SHEET
-async function sendResultsToSheet() {
-    // must have calculated scores already
-    if (!chart) {
-        alert("Please click 'Show My Gifts' first so we can score your results.");
-        return;
-    }
-
-    // get scores in the same order as gifts[]
-    const scores = calculateScores();
-
-    // figure out top 3 gifts
-    const pairs = gifts.map((g, idx) => ({ name: g.name, score: scores[idx] }));
-    pairs.sort((a,b) => b.score - a.score);
-    const topGifts = [
-        `${pairs[0].name} (${pairs[0].score})`,
-        `${pairs[1].name} (${pairs[1].score})`,
-        `${pairs[2].name} (${pairs[2].score})`,
-    ];
-
-    // get name/email from inputs
+// ---------- 7. SEND TO GOOGLE SHEET ----------
+async function sendResultsToSheet(scores, topGifts) {
     const name  = document.getElementById("personName").value.trim();
     const email = document.getElementById("personEmail").value.trim();
 
+    // it's fair to require name/email for ministry follow-up
     if (!name || !email) {
-        alert("Please enter your name and email so the church can follow up.");
-        return;
+        alert("Please enter your name and email so we can follow up.");
+        return false;
     }
+
+    // format topGifts into ["GiftName (Score)", ...]
+    const topGiftStrings = topGifts.map(g => `${g.name} (${g.score})`);
 
     const payload = {
         name,
         email,
-        topGifts,
+        topGifts: topGiftStrings,
         scores
     };
 
@@ -671,20 +649,52 @@ async function sendResultsToSheet() {
             body: JSON.stringify(payload)
         });
 
-        if (res.ok) {
-            alert("Thank you! Your results have been sent to Sugar Land Methodist.");
-        } else {
-            alert("Sorry, there was an issue sending your results.");
+        if (!res.ok) {
+            alert("We calculated your gifts, but there was an issue saving them for follow-up.");
+            return false;
         }
     } catch (err) {
-        alert("Network error sending results.");
+        alert("We calculated your gifts, but there was a network issue saving them for follow-up.");
+        return false;
     }
+    return true;
 }
 
-document.getElementById("sendBtn").addEventListener("click", sendResultsToSheet);
+// ---------- 8. MAIN BUTTON HANDLER ----------
+document.getElementById("submitBtn").addEventListener("click", async () => {
+    // 1. validate that all 80 answers are filled
+    const allSelects = document.querySelectorAll("#surveyForm select");
+    for (const sel of allSelects) {
+        if (!sel.value) {
+            alert("Please answer all 80 questions (1–5) before continuing.");
+            sel.scrollIntoView({behavior:"smooth", block:"center"});
+            sel.focus();
+            return;
+        }
+    }
 
-// init form on load
+    // 2. calculate scores
+    const scores = calculateScores();
+
+    // 3. update chart + top 3 for the user
+    drawChart(scores);
+    const top3 = showTop3(scores);
+
+    // 4. send to Google Sheets in background
+    const ok = await sendResultsToSheet(scores, top3);
+
+    if (ok) {
+        // optional: visual confirmation after save succeeds
+        console.log("Results successfully sent to sheet.");
+    }
+
+    // 5. scroll to chart so they see it
+    document.getElementById("resultChart").scrollIntoView({ behavior: "smooth" });
+});
+
+// ---------- 9. INIT ----------
 buildForm();
 </script>
+
 </body>
 </html>
