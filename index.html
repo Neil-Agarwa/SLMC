@@ -642,23 +642,25 @@ async function sendResultsToSheet(scores, topGifts) {
         scores
     };
 
+    // IMPORTANT: use your FINAL_URL from the new deployment below
+    const FINAL_URL = "https://script.google.com/macros/s/AKfycby3h3tDfeHM11HCiJ1sq29UrALKLd2Y11Yx_oMKm91-mOzRb12DLSlH2F0m5eSkIeEkUw/exec";
+
     try {
-        const res = await fetch("https://script.google.com/macros/s/AKfycby3h3tDfeHM11HCiJ1sq29UrALKLd2Y11Yx_oMKm91-mOzRb12DLSlH2F0m5eSkIeEkUw/exec", {
+        // Fire-and-forget: we don't block the user on CORS/readback
+        fetch(FINAL_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
+        }).catch(err => {
+            console.warn("Background save failed:", err);
         });
-
-        if (!res.ok) {
-            alert("Your gifts were calculated, but there was an issue saving them for follow-up.");
-            return false;
-        }
     } catch (err) {
-        alert("Your gifts were calculated, but there was a network issue saving them for follow-up.");
-        return false;
+        console.warn("Background save threw:", err);
     }
+
     return true;
 }
+
 
 // ---------- 8. MAIN BUTTON HANDLER ----------
 document.getElementById("submitBtn").addEventListener("click", async () => {
